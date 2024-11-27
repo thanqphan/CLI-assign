@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CLI_assign.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,12 @@ namespace CLI_assign.Models
         public string Name { get; set; }
 
         [JsonPropertyName("Latitude")]
-        public double Latitude { get; set; }
+        [JsonConverter(typeof(NullableConverter))]
+        public double? Latitude { get; set; }
 
         [JsonPropertyName("Longitude")]
-        public double Longitude { get; set; }
+        [JsonConverter(typeof(NullableConverter))]
+        public double? Longitude { get; set; }
 
         [JsonPropertyName("Address")]
         public string Address { get; set; }

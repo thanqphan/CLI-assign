@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CLI-assign": {
+      "commandName": "Project",
+      "commandLineArgs": "iJhz 5432"
+    }
+  }
+}

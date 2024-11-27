@@ -33,7 +33,7 @@ namespace CLI_assign.Models
 
         public List<string> Amenities { get; set; }
         [JsonPropertyName("images")]
-        public Images Images { get; set; }
+        public PatagoniaImages Images { get; set; }
     }
 
     public class PatagoniaImages

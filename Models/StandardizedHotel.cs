@@ -26,19 +26,21 @@ namespace CLI_assign.Models
         [JsonPropertyName("amenities")]
         public Amenities Amenities { get; set; }
         [JsonPropertyName("images")]
-        public Images Images { get; set; }
+        public Images? Images { get; set; }
 
         [JsonPropertyName("booking_conditions")]
         public List<string> BookingConditions { get; set; }
+        
+        public string Source { get; set; }
     }
 
     public class Location
     {
         [JsonPropertyName("lat")]
-        public double Lat { get; set; }
+        public double? Lat { get; set; }
 
         [JsonPropertyName("lng")]
-        public double Lng { get; set; }
+        public double? Lng { get; set; }
 
         [JsonPropertyName("address")]
         public string Address { get; set; }
