@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace CLI_assign.Utils
 {
@@ -14,7 +9,7 @@ namespace CLI_assign.Utils
         {
             if (reader.TokenType == JsonTokenType.Null)
             {
-                return null; 
+                return null;
             }
 
             if (reader.TokenType == JsonTokenType.String)
@@ -48,11 +43,11 @@ namespace CLI_assign.Utils
         {
             if (value.HasValue)
             {
-                writer.WriteNumberValue(value.Value); 
+                writer.WriteNumberValue(value.Value);
             }
             else
             {
-                writer.WriteNullValue(); 
+                writer.WriteNullValue();
             }
         }
 

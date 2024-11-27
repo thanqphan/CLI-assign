@@ -1,20 +1,15 @@
-﻿using CLI_assign.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using CLI_assign.Constants;
+using CLI_assign.Models;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace CLI_assign.Adapters
 {
     public class PaperfliesHotelAdapter : IHotelFetcher
     {
-        private const string Endpoint = "https://5f2be0b4ffc88500167b85a0.mockapi.io/suppliers/paperflies";
         public async Task<List<StandardizedHotel>> FetchHotelsAsync()
         {
             using var client = new HttpClient();
-            var response = await client.GetStringAsync(Endpoint);
+            var response = await client.GetStringAsync(HotelFetcherConst.PaperfliesEndpoint);
             var hotels = JsonSerializer.Deserialize<List<PaperfliesHotel>>(response);
 
             return hotels.Select(hotel => new StandardizedHotel
@@ -50,8 +45,8 @@ namespace CLI_assign.Adapters
                     }).ToList(),
                     Amenities = new List<HotelImage>() // No amenities images 
                 },
-                BookingConditions = hotel.BookingConditions ?? new List<string>(), 
-                Source= "Paperflies" // top priority
+                BookingConditions = hotel.BookingConditions ?? new List<string>(),
+                Source = "Paperflies" // top priority
             }).ToList();
         }
     }

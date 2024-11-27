@@ -16,11 +16,6 @@ namespace CLI_assign
             // Parse input arguments into pairs of (hotel_id, destination_id)
             var parsedPairs = ParseInputArgs(args);
 
-            foreach (var pair in parsedPairs)
-            {
-                Console.WriteLine($"HotelId: {pair.HotelId}, DestinationId: {pair.DestinationId}");
-            }
-
             // Fetch and merge hotel data
             var hotelService = new HotelService();
             var mergedHotels = await hotelService.FetchAndMergeHotelsAsync();

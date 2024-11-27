@@ -48,7 +48,7 @@ namespace CLI_assign.Services
             ).ToList();
         }
 
-
+        #region
         private StandardizedHotel MergeHotelData(List<StandardizedHotel> hotels)
         {
             // top priority
@@ -135,7 +135,7 @@ namespace CLI_assign.Services
                 )
             };
         }
-
+        #endregion
 
     }
 }

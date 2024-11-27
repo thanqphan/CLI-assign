@@ -1,21 +1,15 @@
-﻿using CLI_assign.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using CLI_assign.Constants;
+using CLI_assign.Models;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace CLI_assign.Adapters
 {
     public class PatagoniaHotelAdapter : IHotelFetcher
     {
-        private const string Endpoint = "https://5f2be0b4ffc88500167b85a0.mockapi.io/suppliers/patagonia";
-
         public async Task<List<StandardizedHotel>> FetchHotelsAsync()
         {
             using var client = new HttpClient();
-            var response = await client.GetStringAsync(Endpoint);
+            var response = await client.GetStringAsync(HotelFetcherConst.PatagoniaEndpoint);
             var hotels = JsonSerializer.Deserialize<List<PatagoniaHotel>>(response);
 
             return hotels.Select(hotel => new StandardizedHotel
