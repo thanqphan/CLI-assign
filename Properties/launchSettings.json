@@ -2,7 +2,7 @@
   "profiles": {
     "CLI-assign": {
       "commandName": "Project",
-      "commandLineArgs": "iJhz 5432"
+      "commandLineArgs": "\"iJhz\" \"5432\" \"SjyX\" \"5432\""
     }
   }
 }

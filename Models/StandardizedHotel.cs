@@ -30,7 +30,7 @@ namespace CLI_assign.Models
 
         [JsonPropertyName("booking_conditions")]
         public List<string> BookingConditions { get; set; }
-        
+        [JsonIgnore]
         public string Source { get; set; }
     }
 

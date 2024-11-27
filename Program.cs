@@ -7,23 +7,31 @@ namespace CLI_assign
     {
         static async Task Main(string[] args)
         {
-            if (args.Length < 2)
+            if (args.Length == 0)
             {
-                Console.WriteLine("Usage: my_hotel_merger <hotel_ids> <destination_ids>");
+                Console.WriteLine("Usage: dotnet run --project CLI-assign.csproj $1 $2, etc");
                 return;
             }
 
-            var hotelIds = args[0];
-            var destinationIds = args[1];
+            // Parse input arguments into pairs of (hotel_id, destination_id)
+            var parsedPairs = ParseInputArgs(args);
 
-            // Fetch data from all suppliers
+            foreach (var pair in parsedPairs)
+            {
+                Console.WriteLine($"HotelId: {pair.HotelId}, DestinationId: {pair.DestinationId}");
+            }
+
+            // Fetch and merge hotel data
             var hotelService = new HotelService();
             var mergedHotels = await hotelService.FetchAndMergeHotelsAsync();
 
-            // Filter data based on input arguments
-            var filteredHotels = hotelService.FilterHotels(mergedHotels, hotelIds, destinationIds);
+            // Filter data based on parsed pairs
+            var filteredHotels = parsedPairs
+                .SelectMany(pair => hotelService.FilterHotels(mergedHotels, pair.HotelId, pair.DestinationId))
+                .DistinctBy(h => new { h.Id, h.DestinationId })
+                .ToList();
 
-            // Convert to JSON and print output
+            // Convert result to JSON
             var resultJson = JsonSerializer.Serialize(filteredHotels, new JsonSerializerOptions
             {
                 WriteIndented = true
@@ -31,6 +39,42 @@ namespace CLI_assign
 
             Console.WriteLine(resultJson);
         }
+        static List<(string HotelId, string DestinationId)> ParseInputArgs(string[] args)
+        {
+            // merge input arguments
+            var input = string.Join(" ", args);
+
+            // split merged ","
+            var segments = input
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(segment => segment.Trim())
+                .ToList();
+
+            var pairs = new List<(string HotelId, string DestinationId)>();
+
+            // must have 2 elements
+            foreach (var segment in segments)
+            {
+                var parts = segment.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length == 1)
+                {
+                    pairs.Add((parts[0], "none")); // desId="none"
+                }
+                else if (parts.Length == 2)
+                {
+                    pairs.Add((parts[0], parts[1])); // nice case
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid input segment: {segment}");
+                }
+            }
+
+            return pairs;
+        }
+
 
     }
+
 }

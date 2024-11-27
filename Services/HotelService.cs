@@ -48,6 +48,7 @@ namespace CLI_assign.Services
             ).ToList();
         }
 
+
         private StandardizedHotel MergeHotelData(List<StandardizedHotel> hotels)
         {
             // top priority
@@ -61,14 +62,18 @@ namespace CLI_assign.Services
                 Id = baseHotel.Id,
                 DestinationId = baseHotel.DestinationId,
                 Name = baseHotel.Name ?? hotels.FirstOrDefault(h => !string.IsNullOrWhiteSpace(h.Name))?.Name,
-                Description = baseHotel.Description ?? hotels.FirstOrDefault(h => !string.IsNullOrWhiteSpace(h.Description))?.Description,
+                Description = baseHotel.Description ?? hotels.FirstOrDefault
+                                                (h => !string.IsNullOrWhiteSpace(h.Description))?.Description,
                 Location = new Location
                 {
                     Lat = baseHotel.Location?.Lat ?? hotels.FirstOrDefault(h => h.Location?.Lat != null)?.Location?.Lat,
                     Lng = baseHotel.Location?.Lng ?? hotels.FirstOrDefault(h => h.Location?.Lng != null)?.Location?.Lng,
-                    Address = baseHotel.Location?.Address ?? hotels.FirstOrDefault(h => !string.IsNullOrWhiteSpace(h.Location?.Address))?.Location?.Address,
-                    City = baseHotel.Location?.City ?? hotels.FirstOrDefault(h => !string.IsNullOrWhiteSpace(h.Location?.City))?.Location?.City,
-                    Country = baseHotel.Location?.Country ?? hotels.FirstOrDefault(h => !string.IsNullOrWhiteSpace(h.Location?.Country))?.Location?.Country
+                    Address = baseHotel.Location?.Address ?? hotels.FirstOrDefault
+                                                (h => !string.IsNullOrWhiteSpace(h.Location?.Address))?.Location?.Address,
+                    City = baseHotel.Location?.City ?? hotels.FirstOrDefault
+                                                (h => !string.IsNullOrWhiteSpace(h.Location?.City))?.Location?.City,
+                    Country = baseHotel.Location?.Country ?? hotels.FirstOrDefault
+                                                (h => !string.IsNullOrWhiteSpace(h.Location?.Country))?.Location?.Country
                 },
                 Amenities = MergeAmenities(hotels),
                 Images = MergeImages(hotels),
@@ -81,7 +86,7 @@ namespace CLI_assign.Services
 
             return mergedHotel;
         }
-        // Merge amenities with additional checks for overlap between "general" and "room"
+        // Merge amenities with additional checks for overlap between "general" and "room" :D
         private Amenities MergeAmenities(List<StandardizedHotel> hotels)
         {
             var generalAmenities = hotels
